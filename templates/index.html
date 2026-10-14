@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>LogiRoute | Delivery Optimization</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <!-- Logo -->
+    <div class="navbar-brand">
+
+        <div class="logo-icon">
+            🚚
+        </div>
+
+        <div class="logo-text">
+            LogiRoute
+        </div>
+
+    </div>
+
+
+    <!-- Navigation -->
+    <div class="nav-links">
+
+        <a href="/" class="nav-link active">
+            Dashboard
+        </a>
+
+        <a href="/orders" class="nav-link">
+            Orders
+        </a>
+
+        <a href="/vehicles" class="nav-link">
+            Vehicles
+        </a>
+
+        <a href="/routes" class="nav-link">
+            Routes
+        </a>
+
+        <a href="/tracking" class="nav-link">
+            Tracking
+        </a>
+
+        <a href="/analytics" class="nav-link">
+            Analytics
+        </a>
+
+    </div>
+
+
+    <!-- Navbar Right -->
+
+    <div class="navbar-right">
+
+        <button class="notification-btn">
+            🔔
+        </button>
+
+
+        <div class="profile">
+
+            <div class="profile-avatar">
+                K
+            </div>
+
+            <div class="profile-info">
+
+                <span class="profile-name">
+                    Kundana
+                </span>
+
+                <span class="profile-role">
+                    Admin
+                </span>
+
+            </div>
+
+            <span class="dropdown">
+                ▾
+            </span>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main-container">
+
+
+    <!-- Page Header -->
+
+    <section class="page-header">
+
+        <div>
+
+            <p class="welcome-text">
+                Welcome back, Kundana 👋
+            </p>
+
+            <h1>
+                Logistics Dashboard
+            </h1>
+
+            <p class="subtitle">
+                Monitor deliveries and optimize routes efficiently.
+            </p>
+
+        </div>
+
+
+        <button class="optimize-btn">
+            ⚡ Optimize Routes
+        </button>
+
+    </section>
+
+
+
+    <!-- ================= STAT CARDS ================= -->
+
+    <section class="stats-grid">
+
+
+        <!-- Orders -->
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon blue">
+                    📦
+                </div>
+
+                <span class="stat-status positive">
+                    +12.5%
+                </span>
+
+            </div>
+
+            <p class="stat-label">
+                Total Orders
+            </p>
+
+            <h2>
+                1,284
+            </h2>
+
+            <p class="stat-description">
+                Compared to last month
+            </p>
+
+        </div>
+
+
+
+        <!-- Vehicles -->
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon teal">
+                    🚚
+                </div>
+
+                <span class="stat-status positive">
+                    +4.2%
+                </span>
+
+            </div>
+
+            <p class="stat-label">
+                Active Vehicles
+            </p>
+
+            <h2>
+                48
+            </h2>
+
+            <p class="stat-description">
+                42 currently on route
+            </p>
+
+        </div>
+
+
+
+        <!-- Delivered -->
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon green">
+                    ✓
+                </div>
+
+                <span class="stat-status positive">
+                    +8.7%
+                </span>
+
+            </div>
+
+            <p class="stat-label">
+                Delivered
+            </p>
+
+            <h2>
+                1,096
+            </h2>
+
+            <p class="stat-description">
+                85.4% delivery success
+            </p>
+
+        </div>
+
+
+
+        <!-- Distance -->
+
+        <div class="stat-card">
+
+            <div class="stat-top">
+
+                <div class="stat-icon orange">
+                    📍
+                </div>
+
+                <span class="stat-status negative">
+                    -6.3%
+                </span>
+
+            </div>
+
+            <p class="stat-label">
+                Distance Saved
+            </p>
+
+            <h2>
+                2,840 km
+            </h2>
+
+            <p class="stat-description">
+                Through route optimization
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= CONTENT GRID ================= -->
+
+    <section class="content-grid">
+
+
+        <!-- Route Map -->
+
+        <div class="dashboard-card map-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Live Route Map
+                    </h2>
+
+                    <p>
+                        Current delivery routes
+                    </p>
+
+                </div>
+
+                <button class="view-btn">
+                    View Full Map
+                </button>
+
+            </div>
+
+
+            <!-- Fake Map -->
+
+            <div class="map">
+
+                <div class="map-grid"></div>
+
+
+                <!-- Route -->
+
+                <div class="route route-one"></div>
+
+                <div class="route route-two"></div>
+
+                <div class="route route-three"></div>
+
+
+                <!-- Location points -->
+
+                <div class="location-point point-one">
+                    <span>1</span>
+                </div>
+
+                <div class="location-point point-two">
+                    <span>2</span>
+                </div>
+
+                <div class="location-point point-three">
+                    <span>3</span>
+                </div>
+
+                <div class="location-point point-four">
+                    <span>4</span>
+                </div>
+
+
+                <div class="map-label">
+                    Vijayawada
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Delivery Status -->
+
+        <div class="dashboard-card delivery-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Delivery Status
+                    </h2>
+
+                    <p>
+                        Today's deliveries
+                    </p>
+
+                </div>
+
+                <span class="more">
+                    ⋮
+                </span>
+
+            </div>
+
+
+            <div class="delivery-content">
+
+
+                <div class="progress-circle">
+
+                    <div class="circle-inner">
+
+                        <strong>
+                            85%
+                        </strong>
+
+                        <span>
+                            Delivered
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="delivery-details">
+
+                    <div class="status-row">
+
+                        <span>
+                            <i class="dot delivered"></i>
+                            Delivered
+                        </span>
+
+                        <strong>
+                            1,096
+                        </strong>
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <span>
+                            <i class="dot transit"></i>
+                            In Transit
+                        </span>
+
+                        <strong>
+                            142
+                        </strong>
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <span>
+                            <i class="dot pending"></i>
+                            Pending
+                        </span>
+
+                        <strong>
+                            46
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= BOTTOM GRID ================= -->
+
+    <section class="bottom-grid">
+
+
+        <!-- Recent Orders -->
+
+        <div class="dashboard-card orders-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Recent Orders
+                    </h2>
+
+                    <p>
+                        Latest delivery requests
+                    </p>
+
+                </div>
+
+                <a href="/orders">
+                    View All
+                </a>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Order ID
+                            </th>
+
+                            <th>
+                                Customer
+                            </th>
+
+                            <th>
+                                Destination
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                #LR1024
+                            </td>
+
+                            <td>
+                                Ravi Kumar
+                            </td>
+
+                            <td>
+                                Guntur
+                            </td>
+
+                            <td>
+                                <span class="badge delivered-badge">
+                                    Delivered
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                #LR1023
+                            </td>
+
+                            <td>
+                                Priya Sharma
+                            </td>
+
+                            <td>
+                                Vijayawada
+                            </td>
+
+                            <td>
+                                <span class="badge transit-badge">
+                                    In Transit
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                #LR1022
+                            </td>
+
+                            <td>
+                                Arjun Rao
+                            </td>
+
+                            <td>
+                                Hyderabad
+                            </td>
+
+                            <td>
+                                <span class="badge pending-badge">
+                                    Pending
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                #LR1021
+                            </td>
+
+                            <td>
+                                Sneha Reddy
+                            </td>
+
+                            <td>
+                                Chennai
+                            </td>
+
+                            <td>
+                                <span class="badge delivered-badge">
+                                    Delivered
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Route Efficiency -->
+
+        <div class="dashboard-card efficiency-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Route Efficiency
+                    </h2>
+
+                    <p>
+                        This week's performance
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="efficiency-chart">
+
+                <div class="chart-bars">
+
+                    <div class="bar-wrapper">
+                        <div class="bar bar-1"></div>
+                        <span>Mon</span>
+                    </div>
+
+                    <div class="bar-wrapper">
+                        <div class="bar bar-2"></div>
+                        <span>Tue</span>
+                    </div>
+
+                    <div class="bar-wrapper">
+                        <div class="bar bar-3"></div>
+                        <span>Wed</span>
+                    </div>
+
+                    <div class="bar-wrapper">
+                        <div class="bar bar-4"></div>
+                        <span>Thu</span>
+                    </div>
+
+                    <div class="bar-wrapper">
+                        <div class="bar bar-5"></div>
+                        <span>Fri</span>
+                    </div>
+
+                    <div class="bar-wrapper">
+                        <div class="bar bar-6"></div>
+                        <span>Sat</span>
+                    </div>
+
+                    <div class="bar-wrapper">
+                        <div class="bar bar-7"></div>
+                        <span>Sun</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="efficiency-footer">
+
+                <div>
+
+                    <strong>
+                        92.4%
+                    </strong>
+
+                    <span>
+                        Average efficiency
+                    </span>
+
+                </div>
+
+                <div class="efficiency-up">
+                    ↑ 7.8%
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <p>
+        © 2026 LogiRoute. Logistics Route & Delivery Optimization Platform.
+    </p>
+
+</footer>
+
+
+</body>
+</html>

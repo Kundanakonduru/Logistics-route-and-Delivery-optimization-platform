@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ title }} | LogiRoute
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-layout">  <!-- Left Section -->  
+<div class="auth-aside">  
+
+    <a class="brand brand-light"  
+       href="{{ url_for('landing') }}">  
+
+        <span class="brand-mark">L</span>  
+        LogiRoute  
+
+    </a>  
+
+    <div>  
+
+        <div class="eyebrow light-eyebrow">  
+            WELCOME BACK  
+        </div>  
+
+        {% if role == 'admin' %}  
+
+            <h1>  
+                Keep Every Delivery<br>  
+                <span>Under Control.</span>  
+            </h1>  
+
+            <p>  
+                Sign in to manage company requests  
+                and monitor delivery operations.  
+            </p>  
+
+        {% else %}  
+
+            <h1>  
+                Your Deliveries,<br>  
+                <span>All in One Place.</span>  
+            </h1>  
+
+            <p>  
+                Sign in to submit delivery requests  
+                and check their current status.  
+            </p>  
+
+        {% endif %}  
+
+    </div>  
+
+    <a class="back-link light-back"  
+       href="{{ url_for('landing') }}">  
+
+        ← Back to role selection  
+
+    </a>  
+
+</div>  
+
+
+<!-- Right Section -->  
+<div class="auth-main">  
+
+    <div class="auth-card">  
+
+        <div class="form-symbol">  
+            {% if role == 'admin' %}  
+                A  
+            {% else %}  
+                C  
+            {% endif %}  
+        </div>  
+
+        <h2>{{ title }}</h2>  
+
+        {% if role == 'admin' %}  
+
+            <p class="form-subtitle">  
+                Enter the admin credentials provided  
+                by the project owner.  
+            </p>  
+
+        {% else %}  
+
+            <p class="form-subtitle">  
+                Welcome back! Enter your company  
+                account details to continue.  
+            </p>  
+
+        {% endif %}  
+
+
+        <!-- Login Form -->  
+        <form method="POST"  
+              class="form">  
+
+            <label for="email">  
+                Email Address  
+            </label>  
+
+            <input  
+                type="email"  
+                id="email"  
+                name="email"  
+                placeholder="name@company.com"  
+                autocomplete="email"  
+                required  
+            >  
+
+
+            <label for="password">  
+                Password  
+            </label>  
+
+            <input  
+                type="password"  
+                id="password"  
+                name="password"  
+                placeholder="Enter your password"  
+                autocomplete="current-password"  
+                required  
+            >  
+
+
+            <!-- Forgot Password -->  
+            <div class="form-row right">  
+
+                <a href="{{ url_for('forgot_password', role=role) }}">  
+                    Forgot Password?  
+                </a>  
+
+            </div>  
+
+
+            <button  
+                type="submit"  
+                class="btn btn-primary full">  
+
+                Sign In <span>→</span>  
+
+            </button>  
+
+        </form>  
+
+
+        <!-- Registration Option for Company Only -->  
+        {% if role == 'user' %}  
+
+            <div class="switch-auth">  
+
+                Don't have a company account?  
+
+                <a href="{{ url_for('register') }}">  
+                    Register Here  
+                </a>  
+
+            </div>  
+
+        {% else %}  
+
+            <div class="switch-auth">  
+
+                Admin accounts are created by the  
+                project owner.  
+
+            </div>  
+
+        {% endif %}  
+
+    </div>  
+
+</div>
+
+</section>  {% endblock %}

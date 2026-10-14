@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}
+Company Registration | LogiRoute
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-layout">
+
+    <!-- Left Section -->
+    <div class="auth-aside">
+
+        <a class="brand brand-light"
+           href="{{ url_for('landing') }}">
+
+            <span class="brand-mark">L</span>
+            LogiRoute
+
+        </a>
+
+        <div>
+
+            <div class="eyebrow light-eyebrow">
+                COMPANY REGISTRATION
+            </div>
+
+            <h1>
+                Start Moving<br>
+                <span>Goods with Ease.</span>
+            </h1>
+
+            <p>
+                Create your company account to submit
+                delivery requests and monitor their status.
+            </p>
+
+        </div>
+
+        <a class="back-link light-back"
+           href="{{ url_for('landing') }}">
+
+            ← Back to role selection
+
+        </a>
+
+    </div>
+
+
+    <!-- Right Section -->
+    <div class="auth-main">
+
+        <div class="auth-card">
+
+            <div class="form-symbol">
+                C
+            </div>
+
+            <h2>Create Company Account</h2>
+
+            <p class="form-subtitle">
+                Enter your details to register your company.
+            </p>
+
+
+            <!-- Registration Form -->
+            <form method="POST" class="form">
+
+                <label for="name">
+                    Company / Contact Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your company name"
+                    autocomplete="organization"
+                    required
+                >
+
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="name@company.com"
+                    autocomplete="email"
+                    required
+                >
+
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="At least 8 characters"
+                    minlength="8"
+                    autocomplete="new-password"
+                    required
+                >
+
+
+                <label for="confirm_password">
+                    Confirm Password
+                </label>
+
+                <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    placeholder="Re-enter your password"
+                    minlength="8"
+                    autocomplete="new-password"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary full">
+
+                    Create Account
+                    <span>→</span>
+
+                </button>
+
+            </form>
+
+
+            <!-- Login Link -->
+            <div class="switch-auth">
+
+                Already have a company account?
+
+                <a href="{{ url_for('user_login') }}">
+                    Log In
+                </a>
+
+            </div>
+
+
+            <!-- Forgot Password Link -->
+            <div class="switch-auth small-switch">
+
+                <a href="{{ url_for('forgot_password', role='user') }}">
+                    Forgot your password?
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

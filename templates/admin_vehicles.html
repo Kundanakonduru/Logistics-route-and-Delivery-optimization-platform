@@ -1,0 +1,322 @@
+{% extends "base.html" %}
+
+{% block title %}Vehicle Management | LogiRoute{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-page">
+
+    <!-- Page Header -->
+    <div class="dashboard-header">
+        <div>
+            <p class="eyebrow">FLEET MANAGEMENT</p>
+            <h1>Vehicle Management</h1>
+            <p class="muted">
+                Register vehicles and manage fleet availability.
+            </p>
+        </div>
+
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">
+            Back to Dashboard
+        </a>
+    </div>
+
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-stack">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+
+    <!-- Add Vehicle Form -->
+    <section class="panel vehicle-form-panel">
+
+        <div class="panel-heading">
+            <div>
+                <h2>Add New Vehicle</h2>
+                <p class="muted">
+                    Enter the vehicle details below.
+                </p>
+            </div>
+        </div>
+
+        <form
+            action="{{ url_for('add_vehicle') }}"
+            method="POST"
+            class="form vehicle-form"
+        >
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="registration_number">
+                        Registration Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="registration_number"
+                        name="registration_number"
+                        placeholder="e.g. AP16AB1234"
+                        maxlength="30"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="vehicle_type">
+                        Vehicle Type
+                    </label>
+
+                    <select
+                        id="vehicle_type"
+                        name="vehicle_type"
+                        required
+                    >
+                        <option value="">Select vehicle type</option>
+                        <option value="Mini Truck">Mini Truck</option>
+                        <option value="Pickup Truck">Pickup Truck</option>
+                        <option value="Delivery Van">Delivery Van</option>
+                        <option value="Medium Truck">Medium Truck</option>
+                        <option value="Heavy Truck">Heavy Truck</option>
+                        <option value="Container Truck">Container Truck</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="weight_capacity_kg">
+                        Weight Capacity (kg)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="weight_capacity_kg"
+                        name="weight_capacity_kg"
+                        placeholder="e.g. 1500"
+                        min="0.01"
+                        step="0.01"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="volume_capacity_m3">
+                        Volume Capacity (m³)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="volume_capacity_m3"
+                        name="volume_capacity_m3"
+                        placeholder="e.g. 8"
+                        min="0.01"
+                        step="0.01"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group full-width">
+                    <label for="current_location">
+                        Current Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="current_location"
+                        name="current_location"
+                        placeholder="e.g. Vijayawada, Andhra Pradesh"
+                        maxlength="200"
+                        required
+                    >
+                </div>
+
+            </div>
+
+
+            <div class="form-actions">
+                <button type="reset" class="btn btn-secondary">
+                    Clear Form
+                </button>
+
+                <button type="submit" class="btn btn-primary">
+                    + Add Vehicle
+                </button>
+            </div>
+
+        </form>
+
+    </section>
+
+
+    <!-- Vehicle List -->
+    <section class="panel vehicle-list-panel">
+
+        <div class="panel-heading">
+            <div>
+                <h2>Registered Vehicles</h2>
+                <p class="muted">
+                    View fleet details and update availability.
+                </p>
+            </div>
+
+            <span class="count-badge">
+                {{ vehicles|length }} Vehicles
+            </span>
+        </div>
+
+
+        {% if vehicles %}
+
+            <div class="table-wrapper">
+
+                <table class="data-table">
+
+                    <thead>
+                        <tr>
+                            <th>Vehicle</th>
+                            <th>Type</th>
+                            <th>Weight Capacity</th>
+                            <th>Volume Capacity</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Update Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for vehicle in vehicles %}
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        {{ vehicle.registration_number }}
+                                    </strong>
+
+                                    <small class="table-subtext">
+                                        ID: VH{{ "%03d"|format(vehicle.id) }}
+                                    </small>
+                                </td>
+
+                                <td>
+                                    {{ vehicle.vehicle_type }}
+                                </td>
+
+                                <td>
+                                    {{ "%.2f"|format(vehicle.weight_capacity_kg) }}
+                                    kg
+                                </td>
+
+                                <td>
+                                    {{ "%.2f"|format(vehicle.volume_capacity_m3) }}
+                                    m³
+                                </td>
+
+                                <td>
+                                    {{ vehicle.current_location }}
+                                </td>
+
+                                <td>
+                                    <span class="status-badge
+                                        {% if vehicle.status == 'Available' %}
+                                            status-delivered
+                                        {% elif vehicle.status == 'Under Maintenance' %}
+                                            status-cancelled
+                                        {% elif vehicle.status == 'In Transit' %}
+                                            status-transit
+                                        {% else %}
+                                            status-confirmed
+                                        {% endif %}
+                                    ">
+                                        {{ vehicle.status }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <form
+                                        action="{{ url_for(
+                                            'update_vehicle_status',
+                                            vehicle_id=vehicle.id
+                                        ) }}"
+                                        method="POST"
+                                        class="status-form"
+                                    >
+
+                                        <select
+                                            name="status"
+                                            aria-label="Vehicle status"
+                                            required
+                                        >
+
+                                            {% for status in [
+                                                'Available',
+                                                'Assigned',
+                                                'In Transit',
+                                                'Under Maintenance'
+                                            ] %}
+
+                                                <option
+                                                    value="{{ status }}"
+                                                    {% if vehicle.status == status %}
+                                                        selected
+                                                    {% endif %}
+                                                >
+                                                    {{ status }}
+                                                </option>
+
+                                            {% endfor %}
+
+                                        </select>
+
+                                        <button
+                                            type="submit"
+                                            class="btn btn-small btn-primary"
+                                        >
+                                            Update
+                                        </button>
+
+                                    </form>
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+                <div class="empty-icon">🚚</div>
+
+                <h3>No vehicles registered yet</h3>
+
+                <p>
+                    Add your first vehicle using the form above.
+                </p>
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</div>
+
+{% endblock %}

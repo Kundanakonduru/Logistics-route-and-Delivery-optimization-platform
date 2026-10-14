@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}LogiRoute{% endblock %}
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    {% if session.get('account_id') %}
+
+    <header class="topbar">
+
+        <a class="brand"
+           href="{{ url_for('admin_dashboard') if session.get('role') == 'admin' else url_for('user_dashboard') }}">
+
+            <span class="brand-mark">L</span>
+            LogiRoute
+
+        </a>
+
+        <nav>
+
+            {% if session.get('role') == 'admin' %}
+
+                <!-- Admin Navigation -->
+
+                <a href="{{ url_for('admin_dashboard') }}">
+                    Dashboard
+                </a>
+
+                <a href="{{ url_for('admin_requests') }}">
+                    Delivery Requests
+                </a>
+
+                <a href="{{ url_for('manage_vehicles') }}">
+                    Vehicles
+                </a>
+
+            {% else %}
+
+                <!-- Company Navigation -->
+
+                <a href="{{ url_for('user_dashboard') }}">
+                    Dashboard
+                </a>
+
+                <a href="{{ url_for('new_delivery') }}">
+                    New Delivery
+                </a>
+
+                <a href="{{ url_for('user_deliveries') }}">
+                    My Deliveries
+                </a>
+
+                <a href="{{ url_for('user_profile') }}">
+                    Profile
+                </a>
+
+            {% endif %}
+
+            <!-- Logout -->
+
+            <a class="nav-logout"
+               href="{{ url_for('logout') }}">
+                Logout
+            </a>
+
+        </nav>
+
+    </header>
+
+    {% endif %}
+
+
+    <!-- Main Content -->
+
+    <main class="{% if session.get('account_id') %}page-shell{% else %}public-shell{% endif %}">
+
+        <!-- Success and Error Messages -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                <div class="flash-stack">
+
+                    {% for category, message in messages %}
+
+                        <div class="flash {{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- Individual Page Content -->
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+
+    <!-- Footer -->
+
+    <footer class="footer">
+
+        &copy; 2026 LogiRoute.
+        Smarter Delivery Management.
+
+    </footer>
+
+</body>
+
+</html>

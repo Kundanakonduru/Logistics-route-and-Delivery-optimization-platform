@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}New Delivery | LogiRoute{% endblock %}
+
+{% block content %}
+<section class="form-page">
+
+    <div class="form-heading">
+        <p class="section-label">COMPANY PORTAL</p>
+        <h1>Create a Delivery Request</h1>
+        <p class="muted-text">
+            Enter your delivery details. The Admin will check vehicle
+            availability and assign a suitable vehicle and driver.
+        </p>
+    </div>
+
+    <div class="form-card">
+
+        <form method="POST" action="{{ url_for('new_delivery') }}">
+
+            <div class="form-group">
+                <label for="pickup_address">Pickup Address *</label>
+                <textarea
+                    id="pickup_address"
+                    name="pickup_address"
+                    rows="3"
+                    placeholder="Enter the complete pickup address"
+                    required
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="delivery_address">Delivery Address *</label>
+                <textarea
+                    id="delivery_address"
+                    name="delivery_address"
+                    rows="3"
+                    placeholder="Enter the complete delivery address"
+                    required
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="goods_description">Goods Description *</label>
+                <textarea
+                    id="goods_description"
+                    name="goods_description"
+                    rows="3"
+                    placeholder="Describe the goods or packages"
+                    required
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="weight_kg">Total Weight (kg) *</label>
+                <input
+                    type="number"
+                    id="weight_kg"
+                    name="weight_kg"
+                    min="0.01"
+                    step="0.01"
+                    placeholder="Example: 250"
+                    required
+                >
+                <small>Enter the total weight of all goods in kilograms.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="volume_m3">Total Volume (m³) *</label>
+                <input
+                    type="number"
+                    id="volume_m3"
+                    name="volume_m3"
+                    min="0.01"
+                    step="0.01"
+                    placeholder="Example: 2"
+                    required
+                >
+                <small>Enter the total space occupied by the goods in cubic metres.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="priority">Delivery Priority *</label>
+                <select id="priority" name="priority" required>
+                    <option value="Normal" selected>Normal</option>
+                    <option value="High">High</option>
+                    <option value="Urgent">Urgent</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="requested_date">Requested Delivery Date *</label>
+                <input
+                    type="date"
+                    id="requested_date"
+                    name="requested_date"
+                    min="{{ today }}"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="delivery_deadline">Delivery Deadline *</label>
+                <input
+                    type="date"
+                    id="delivery_deadline"
+                    name="delivery_deadline"
+                    min="{{ today }}"
+                    required
+                >
+                <small>The latest date by which the goods should be delivered.</small>
+            </div>
+
+            <div class="form-actions">
+                <a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    Submit Delivery Request
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+{% endblock %}

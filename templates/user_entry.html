@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}
+Company Access | LogiRoute
+{% endblock %}
+
+{% block content %}
+
+<section class="entry-wrap">
+
+    <!-- Logo -->
+    <a class="brand" href="{{ url_for('landing') }}">
+        <span class="brand-mark">L</span>
+        LogiRoute
+    </a>
+
+
+    <!-- Company Access Card -->
+    <div class="entry-card">
+
+        <div class="form-symbol">
+            C
+        </div>
+
+        <h1>Company Access</h1>
+
+        <p class="form-subtitle">
+            Create a company account or log in
+            to your existing account.
+        </p>
+
+
+        <!-- Registration Option -->
+        <a class="btn btn-primary full"
+           href="{{ url_for('register') }}">
+
+            Create Company Account
+            <span>→</span>
+
+        </a>
+
+
+        <!-- Login Option -->
+        <a class="btn btn-outline full"
+           href="{{ url_for('user_login') }}">
+
+            Already Registered? Log In
+
+        </a>
+
+
+        <!-- Back to Landing Page -->
+        <p class="entry-foot">
+
+            <a href="{{ url_for('landing') }}">
+                ← Back to role selection
+            </a>
+
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

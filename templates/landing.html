@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}
+Welcome | LogiRoute
+{% endblock %}
+
+{% block content %}
+
+<section class="landing">
+
+    <!-- Left Section -->
+    <div class="landing-copy">
+
+        <div class="eyebrow">
+            LOGISTICS MANAGEMENT PLATFORM
+        </div>
+
+        <h1>
+            Deliver Smarter.<br>
+            <span>Move with Confidence.</span>
+        </h1>
+
+        <p class="lead">
+            Manage delivery requests, monitor shipment
+            statuses, and simplify logistics operations
+            with LogiRoute.
+        </p>
+
+        <div class="landing-points">
+
+            <div>
+                <span class="point-icon">✓</span>
+                <span>Easy delivery management</span>
+            </div>
+
+            <div>
+                <span class="point-icon">✓</span>
+                <span>Track your delivery status</span>
+            </div>
+
+            <div>
+                <span class="point-icon">✓</span>
+                <span>Centralized logistics operations</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Right Section -->
+    <div class="choice-card">
+
+        <div class="mini-logo">L</div>
+
+        <h2>Welcome to LogiRoute</h2>
+
+        <p>
+            Choose how you want to continue.
+        </p>
+
+
+        <!-- Admin Option -->
+        <a class="choice-option"
+           href="{{ url_for('admin_login') }}">
+
+            <span class="choice-icon admin-icon">
+                A
+            </span>
+
+            <span class="choice-text">
+
+                <strong>Admin</strong>
+
+                <small>
+                    Manage delivery requests and operations
+                </small>
+
+            </span>
+
+            <span class="arrow">→</span>
+
+        </a>
+
+
+        <!-- Company/User Option -->
+        <a class="choice-option"
+           href="{{ url_for('user_entry') }}">
+
+            <span class="choice-icon user-icon">
+                C
+            </span>
+
+            <span class="choice-text">
+
+                <strong>Company / User</strong>
+
+                <small>
+                    Register, request, and track deliveries
+                </small>
+
+            </span>
+
+            <span class="arrow">→</span>
+
+        </a>
+
+
+        <div class="secure-note">
+            Secure account access
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

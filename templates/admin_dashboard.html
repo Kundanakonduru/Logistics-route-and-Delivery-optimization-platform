@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | LogiRoute{% endblock %}
+
+{% block content %}
+<section class="dashboard-page">
+
+    <div class="dashboard-header">
+        <div>
+            <p class="section-label">ADMIN PANEL</p>
+            <h1>Admin Dashboard</h1>
+            <p class="muted-text">
+                Monitor delivery requests and manage logistics operations.
+            </p>
+        </div>
+
+        <a href="{{ url_for('admin_requests') }}" class="btn btn-primary">
+            Manage Deliveries
+        </a>
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-icon">🏢</div>
+            <p>Total Companies</p>
+            <h2>{{ total_companies }}</h2>
+            <span>Registered companies</span>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">📦</div>
+            <p>Total Deliveries</p>
+            <h2>{{ total_requests }}</h2>
+            <span>All delivery requests</span>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">⏳</div>
+            <p>Pending Deliveries</p>
+            <h2>{{ pending }}</h2>
+            <span>Awaiting processing</span>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🚚</div>
+            <p>In Transit</p>
+            <h2>{{ in_transit }}</h2>
+            <span>Currently on the way</span>
+        </div>
+
+    </div>
+
+    <div class="content-card">
+
+        <div class="card-heading">
+            <div>
+                <h2>Recent Delivery Requests</h2>
+                <p class="muted-text">
+                    Latest requests submitted by registered companies.
+                </p>
+            </div>
+
+            <a href="{{ url_for('admin_requests') }}" class="text-link">
+                View All →
+            </a>
+        </div>
+
+        {% if recent %}
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Company</th>
+                        <th>Pickup Location</th>
+                        <th>Delivery Location</th>
+                        <th>Requested Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in recent %}
+                    <tr>
+                        <td>#{{ item.id }}</td>
+
+                        <td>
+                            {{ item.company_name }}
+                        </td>
+
+                        <td>
+                            {{ item.pickup_address }}
+                        </td>
+
+                        <td>
+                            {{ item.delivery_address }}
+                        </td>
+
+                        <td>
+                            {{ item.requested_date or "Not specified" }}
+                        </td>
+
+                        <td>
+                            <span class="status-badge status-{{ item.status|lower|replace(' ', '-') }}">
+                                {{ item.status }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <h3>No Delivery Requests Yet</h3>
+            <p>
+                Delivery requests submitted by companies will appear here.
+            </p>
+        </div>
+        {% endif %}
+
+    </div>
+
+</section>
+{% endblock %}

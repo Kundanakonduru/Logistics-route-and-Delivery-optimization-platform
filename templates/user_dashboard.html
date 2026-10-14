@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Company Dashboard | LogiRoute{% endblock %}
+
+{% block content %}
+<section class="dashboard-page">
+
+    <div class="dashboard-header">
+        <div>
+            <p class="section-label">COMPANY PORTAL</p>
+            <h1>Welcome, {{ session.get('name', 'Company') }}!</h1>
+            <p class="muted-text">
+                Track your deliveries and manage your logistics requests.
+            </p>
+        </div>
+
+        <a href="{{ url_for('new_delivery') }}" class="btn btn-primary">
+            + New Delivery
+        </a>
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-icon">📦</div>
+            <p>Total Deliveries</p>
+            <h2>{{ total }}</h2>
+            <span>All your delivery requests</span>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">⏳</div>
+            <p>Pending</p>
+            <h2>{{ recent|selectattr('status', 'equalto', 'Pending')|list|length }}</h2>
+            <span>Awaiting processing</span>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🚚</div>
+            <p>Active Deliveries</p>
+            <h2>{{ active }}</h2>
+            <span>Currently being processed</span>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <p>Delivered</p>
+            <h2>{{ delivered }}</h2>
+            <span>Successfully completed</span>
+        </div>
+
+    </div>
+
+    <div class="content-card">
+
+        <div class="card-heading">
+            <div>
+                <h2>Recent Deliveries</h2>
+                <p class="muted-text">
+                    Check the latest updates on your delivery requests.
+                </p>
+            </div>
+
+            <a href="{{ url_for('user_deliveries') }}" class="text-link">
+                View All →
+            </a>
+        </div>
+
+        {% if recent %}
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Pickup Location</th>
+                        <th>Delivery Location</th>
+                        <th>Requested Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in recent %}
+                    <tr>
+                        <td>#{{ item.id }}</td>
+                        <td>{{ item.pickup_address }}</td>
+                        <td>{{ item.delivery_address }}</td>
+                        <td>{{ item.requested_date or "Not specified" }}</td>
+                        <td>
+                            <span class="status-badge status-{{ item.status|lower|replace(' ', '-') }}">
+                                {{ item.status }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">📦</div>
+            <h3>No Deliveries Yet</h3>
+            <p>
+                You haven't created any delivery requests yet.
+            </p>
+            <a href="{{ url_for('new_delivery') }}" class="btn btn-primary">
+                Create Your First Delivery
+            </a>
+        </div>
+        {% endif %}
+
+    </div>
+
+</section>
+{% endblock %}

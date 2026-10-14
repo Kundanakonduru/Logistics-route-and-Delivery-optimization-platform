@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LogiRoute</title>
+
+    <!-- Navbar CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='navbar.css') }}">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <!-- Logo -->
+        <div class="navbar-brand">
+            <div class="logo-icon">🚚</div>
+
+            <div class="logo-text">
+                LogiRoute
+            </div>
+        </div>
+
+
+        <!-- Navigation Links -->
+        <div class="nav-links">
+
+            <a href="/" class="nav-link active">
+                Dashboard
+            </a>
+
+            <a href="/orders" class="nav-link">
+                Orders
+            </a>
+
+            <a href="/vehicles" class="nav-link">
+                Vehicles
+            </a>
+
+            <a href="/routes" class="nav-link">
+                Route Optimization
+            </a>
+
+            <a href="/tracking" class="nav-link">
+                Map & Tracking
+            </a>
+
+            <a href="/analytics" class="nav-link">
+                Analytics
+            </a>
+
+        </div>
+
+
+        <!-- Right Side -->
+        <div class="navbar-right">
+
+            <!-- Notification -->
+            <button class="notification-btn">
+                🔔
+            </button>
+
+
+            <!-- Profile -->
+            <div class="profile">
+
+                <div class="profile-avatar">
+                    K
+                </div>
+
+                <div class="profile-info">
+
+                    <span class="profile-name">
+                        Kundana
+                    </span>
+
+                    <span class="profile-role">
+                        Admin
+                    </span>
+
+                </div>
+
+                <span class="dropdown">
+                    ▾
+                </span>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- ========================================== -->
+
+</body>
+</html>

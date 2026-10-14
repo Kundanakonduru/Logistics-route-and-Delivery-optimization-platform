@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Error {{ code }} | LogiRoute{% endblock %}
+
+{% block content %}
+
+<section class="error-page">
+
+    <div class="error-card">
+
+        <div class="error-icon">⚠️</div>
+
+        <p class="section-label">SOMETHING WENT WRONG</p>
+
+        <h1>Error {{ code }}</h1>
+
+        <p class="muted-text">
+            {{ message }}
+        </p>
+
+        <div class="error-actions">
+
+            <a href="{{ url_for('landing') }}"
+               class="btn btn-primary">
+                Go to Home
+            </a>
+
+            {% if session.get('role') == 'admin' %}
+
+                <a href="{{ url_for('admin_dashboard') }}"
+                   class="btn btn-secondary">
+                    Admin Dashboard
+                </a>
+
+            {% elif session.get('role') == 'user' %}
+
+                <a href="{{ url_for('user_dashboard') }}"
+                   class="btn btn-secondary">
+                    Company Dashboard
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

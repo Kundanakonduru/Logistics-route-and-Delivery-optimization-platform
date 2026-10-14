@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Deliveries | LogiRoute{% endblock %}
+
+{% block content %}
+<section class="dashboard-page">
+
+    <!-- Page Header -->
+    <div class="dashboard-header">
+        <div>
+            <p class="section-label">ADMIN PANEL</p>
+            <h1>Manage Deliveries</h1>
+            <p class="muted-text">
+                Review delivery requests, assign resources, and track deliveries.
+            </p>
+        </div>
+
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">
+            &larr; Back to Dashboard
+        </a>
+    </div>
+
+    <!-- Delivery Requests -->
+    <div class="content-card">
+
+        <div class="card-heading">
+            <div>
+                <h2>All Delivery Requests</h2>
+                <p class="muted-text">
+                    Review and manage requests submitted by registered companies.
+                </p>
+            </div>
+
+            <span class="count-badge">
+                {{ requests_list|length }} Requests
+            </span>
+        </div>
+
+        {% if requests_list %}
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Company</th>
+                        <th>Pickup Location</th>
+                        <th>Destination</th>
+                        <th>Goods</th>
+                        <th>Weight (kg)</th>
+                        <th>Volume (m³)</th>
+                        <th>Priority</th>
+                        <th>Requested Date</th>
+                        <th>Deadline</th>
+                        <th>Status</th>
+                        <th>Assignment</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for item in requests_list %}
+
+                    <tr>
+                        <!-- Request ID -->
+                        <td>#{{ item.id }}</td>
+
+                        <!-- Company -->
+                        <td>
+                            <strong>{{ item.company_name }}</strong>
+                            <br>
+                            <small>{{ item.company_email }}</small>
+                        </td>
+
+                        <!-- Locations -->
+                        <td>{{ item.pickup_address }}</td>
+
+                        <td>{{ item.delivery_address }}</td>
+
+                        <!-- Goods -->
+                        <td>{{ item.goods_description }}</td>
+
+                        <!-- Weight -->
+                        <td>{{ item.weight_kg or 0 }}</td>
+
+                        <!-- Volume -->
+                        <td>{{ item.volume_m3 or 0 }}</td>
+
+                        <!-- Priority -->
+                        <td>
+                            <span class="status-badge">
+                                {{ item.priority or "Normal" }}
+                            </span>
+                        </td>
+
+                        <!-- Requested Date -->
+                        <td>
+                            {{ item.requested_date or "Not specified" }}
+                        </td>
+
+                        <!-- Deadline -->
+                        <td>
+                            {{ item.delivery_deadline or "Not specified" }}
+                        </td>
+
+                        <!-- Current Status -->
+                        <td>
+                            <span class="status-badge status-{{ item.status|lower|replace(' ', '-') }}">
+                                {{ item.status }}
+                            </span>
+
+                            {% if item.rejection_reason %}
+                                <br><br>
+                                <small>
+                                    <strong>Rejection reason:</strong>
+                                    {{ item.rejection_reason }}
+                                </small>
+                            {% endif %}
+                        </td>
+
+                        <!-- Vehicle and Driver Assignment -->
+                        <td>
+                            {% if item.vehicle_number %}
+                                <strong>Vehicle:</strong>
+                                {{ item.vehicle_number }}
+
+                                {% if item.assigned_vehicle_type %}
+                                    <br>
+                                    <small>{{ item.assigned_vehicle_type }}</small>
+                                {% endif %}
+                            {% else %}
+                                <small>Vehicle not assigned</small>
+                            {% endif %}
+
+                            <br><br>
+
+                            {% if item.driver_name %}
+                                <strong>Driver:</strong>
+                                {{ item.driver_name }}
+
+                                {% if item.driver_phone %}
+                                    <br>
+                                    <small>{{ item.driver_phone }}</small>
+                                {% endif %}
+                            {% else %}
+                                <small>Driver not assigned</small>
+                            {% endif %}
+                        </td>
+
+                        <!-- Actions -->
+                        <td class="request-actions">
+
+                            {% if item.status == "Pending" %}
+
+                                <!-- Accept Request -->
+                                <form
+                                    method="POST"
+                                    action="{{ url_for('accept_request', request_id=item.id) }}"
+                                >
+                                    <label for="vehicle-{{ item.id }}">
+                                        Select Vehicle
+                                    </label>
+
+                                    <select
+                                        id="vehicle-{{ item.id }}"
+                                        name="vehicle_id"
+                                        required
+                                    >
+                                        <option value="">Choose vehicle</option>
+
+                                        {% for vehicle in available_vehicles %}
+                                            <option value="{{ vehicle.id }}">
+                                                {{ vehicle.registration_number }}
+                                                - {{ vehicle.vehicle_type }}
+                                                ({{ vehicle.weight_capacity_kg }} kg /
+                                                {{ vehicle.volume_capacity_m3 }} m³)
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+
+                                    <br><br>
+
+                                    <label for="driver-{{ item.id }}">
+                                        Select Driver
+                                    </label>
+
+                                    <select
+                                        id="driver-{{ item.id }}"
+                                        name="driver_id"
+                                        required
+                                    >
+                                        <option value="">Choose driver</option>
+
+                                        {% for driver in available_drivers %}
+                                            <option value="{{ driver.id }}">
+                                                {{ driver.name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+
+                                    <br><br>
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-small btn-primary"
+                                        {% if not available_vehicles or not available_drivers %}
+                                            disabled
+                                        {% endif %}
+                                    >
+                                        Accept Request
+                                    </button>
+
+                                    {% if not available_vehicles %}
+                                        <p class="muted-text">
+                                            No available vehicles.
+                                        </p>
+                                    {% endif %}
+
+                                    {% if not available_drivers %}
+                                        <p class="muted-text">
+                                            No available drivers.
+                                        </p>
+                                    {% endif %}
+                                </form>
+
+                                <hr>
+
+                                <!-- Reject Request -->
+                                <form
+                                    method="POST"
+                                    action="{{ url_for('reject_request', request_id=item.id) }}"
+                                >
+                                    <label for="reason-{{ item.id }}">
+                                        Rejection Reason
+                                    </label>
+
+                                    <textarea
+                                        id="reason-{{ item.id }}"
+                                        name="rejection_reason"
+                                        rows="3"
+                                        placeholder="Explain why this request is rejected"
+                                        required
+                                    ></textarea>
+
+                                    <br><br>
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-small btn-secondary"
+                                    >
+                                        Reject Request
+                                    </button>
+                                </form>
+
+                            {% elif item.status == "Confirmed" %}
+
+                                <!-- Confirmed Delivery -->
+                                <form
+                                    method="POST"
+                                    action="{{ url_for('update_request', request_id=item.id) }}"
+                                >
+                                    <label for="status-{{ item.id }}">
+                                        Update Status
+                                    </label>
+
+                                    <select
+                                        id="status-{{ item.id }}"
+                                        name="status"
+                                        required
+                                    >
+                                        <option value="In Transit">
+                                            In Transit
+                                        </option>
+                                        <option value="Cancelled">
+                                            Cancelled
+                                        </option>
+                                    </select>
+
+                                    <br><br>
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-small btn-primary"
+                                    >
+                                        Update Status
+                                    </button>
+                                </form>
+
+                            {% elif item.status == "In Transit" %}
+
+                                <!-- In Transit Delivery -->
+                                <form
+                                    method="POST"
+                                    action="{{ url_for('update_request', request_id=item.id) }}"
+                                >
+                                    <label for="status-{{ item.id }}">
+                                        Update Status
+                                    </label>
+
+                                    <select
+                                        id="status-{{ item.id }}"
+                                        name="status"
+                                        required
+                                    >
+                                        <option value="Delivered">
+                                            Delivered
+                                        </option>
+                                        <option value="Cancelled">
+                                            Cancelled
+                                        </option>
+                                    </select>
+
+                                    <br><br>
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-small btn-primary"
+                                    >
+                                        Update Status
+                                    </button>
+                                </form>
+
+                            {% else %}
+
+                                <small>
+                                    No further actions available.
+                                </small>
+
+                            {% endif %}
+
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+
+            <!-- Empty State -->
+            <div class="empty-state">
+                <div class="empty-icon">📦</div>
+
+                <h3>No Delivery Requests Found</h3>
+
+                <p>
+                    Delivery requests submitted by companies will appear here.
+                </p>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+{% endblock %}

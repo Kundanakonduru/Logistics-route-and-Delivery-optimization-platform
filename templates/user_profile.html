@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile | LogiRoute{% endblock %}
+
+{% block content %}
+<section class="form-page">
+
+    <div class="form-heading">
+        <p class="section-label">COMPANY PORTAL</p>
+        <h1>My Profile</h1>
+        <p class="muted-text">
+            View your registered company account details.
+        </p>
+    </div>
+
+    <div class="profile-card">
+
+        <div class="profile-avatar">
+            {{ account.name[0]|upper }}
+        </div>
+
+        <h2>{{ account.name }}</h2>
+        <p class="muted-text">{{ account.email }}</p>
+
+        <div class="profile-divider"></div>
+
+        <div class="profile-details">
+
+            <div class="profile-detail">
+                <span>Company / Account Name</span>
+                <strong>{{ account.name }}</strong>
+            </div>
+
+            <div class="profile-detail">
+                <span>Registered Email</span>
+                <strong>{{ account.email }}</strong>
+            </div>
+
+            <div class="profile-detail">
+                <span>Account Type</span>
+                <strong>Company</strong>
+            </div>
+
+            <div class="profile-detail">
+                <span>Account Created</span>
+                <strong>{{ account.created_at or "Not available" }}</strong>
+            </div>
+
+        </div>
+
+        <div class="profile-actions">
+            <a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary">
+                Back to Dashboard
+            </a>
+
+            <a href="{{ url_for('forgot_password', role='user') }}" class="btn btn-primary">
+                Reset Password
+            </a>
+        </div>
+
+    </div>
+
+</section>
+{% endblock %}
